@@ -1,17 +1,17 @@
 buildscript {
 	ext {
-		springBootVersion = "1.5.2.RELEASE"
+		springBootVersion = '1.5.2.RELEASE'
 	}
 	repositories {
 		mavenCentral()
-		maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1")
 	}
 }
 
+apply plugin: 'org.sonarqube'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 
@@ -21,11 +21,16 @@ jar {
 }
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
+eclipse {
+	classpath {
+		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+	}
+}
 repositories {
 	mavenCentral()
-	maven { url "https://repo.spring.io/snapshot" }
-	maven { url "https://repo.spring.io/milestone" }
 }
 
 
